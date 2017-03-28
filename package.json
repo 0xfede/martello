@@ -1,0 +1,66 @@
+{
+  "name": "martello",
+  "version": "1.0.0",
+  "description": "Stress Tester",
+  "main": "dist/batch.js",
+  "typings": "dist/batch.d.ts",
+  "bin": {
+    "martello": "dist/index.js"
+  },
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "tsc",
+    "_precommit": "npm run build && npm run cover && npm run check-coverage",
+    "commit": "git-cz",
+    "check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
+    "report-coverage": "cat ./coverage/lcov.info | coveralls",
+    "watch:test": "npm t -- -w",
+    "test": "mocha src/*.test.js",
+    "cover": "nyc --reporter=lcov --reporter=text npm t",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/0xfede/martello.git"
+  },
+  "keywords": [
+    "stress",
+    "test"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "author": "Federico Pinna <0xfede@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/martello/fseh/issues"
+  },
+  "homepage": "https://github.com/martello/fseh#readme",
+  "devDependencies": {
+    "@types/commander": "2.3.31",
+    "@types/debug": "0.0.29",
+    "@types/node": "7.0.12",
+    "chai": "3.5.0",
+    "chai-spies": "0.7.1",
+    "commitizen": "2.9.5",
+    "coveralls": "2.12.0",
+    "cz-conventional-changelog": "1.2.0",
+    "husky": "^0.13.2",
+    "mocha": "3.2.0",
+    "nyc": "10.1.2",
+    "rimraf": "2.5.4",
+    "semantic-release": "6.3.2",
+    "typescript": "2.1.6"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
+  },
+  "dependencies": {
+    "commander": "2.9.0",
+    "debug": "2.6.3"
+  }
+}
