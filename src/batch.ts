@@ -16,6 +16,7 @@ export class BatchOptions {
   timeout?: number;
   iterations?: number;
   concurrent?: number;
+  pacing?: number;
   args?: any[];
 }
 
@@ -53,6 +54,9 @@ export class Batch {
     }
     if (typeof opts.concurrent !== 'number' || opts.concurrent <= 0) {
       opts.concurrent = 1;
+    }
+    if (typeof opts.pacing !== 'number' || opts.pacing < 0) {
+      opts.pacing = 0;
     }
     this.module = require(this.opts.test) as TestModule;
   }
@@ -140,7 +144,9 @@ export class Batch {
         } else {
           let runners: Promise<any>[] = [];
           for (let i = 0 ; i < concurrent ; i++) {
-            runners.push(runner());
+            runners.push(new Promise(resolve => {
+              setTimeout(() => resolve(runner()), i * this.opts.pacing || 0);
+            }));
           }
           resolve(Promise.all(runners));
         }
