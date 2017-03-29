@@ -1,6 +1,6 @@
 {
   "name": "martello",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Stress Tester",
   "main": "dist/batch.js",
   "typings": "dist/batch.d.ts",
